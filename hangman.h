@@ -59,6 +59,22 @@ typedef struct wordtag{
 	char category[100];
 }WORD;
 
+int visited(int index, int array[]){
+	int i;
+	for(i = 0; i < WORDS_PER_LEVEL; ++i){
+		if(index == array[i]) return 1;
+	}
+	return 0;
+}
+
+void printWord(int currWordLength, char *word){
+	int i;
+	for(i = 0; i < currWordLength; ++i){
+		printf("%c ", word[i]);
+	}
+	printf("\n");
+}
+
 int play(int *score, int level){
 	WORD dictionary[10] = {
 							{"Mang Toto", "Kainan sa Elbi"},
@@ -82,57 +98,81 @@ int play(int *score, int level){
     }
 
 
-    int lives = 7, match = 0, currIndex, i;
+    int lives = 7, match = 0, currIndex, currWordLength, i;
     int visitedIndex[5], v_indicator = 0;
     char input;
 
+    WORD currentWord;
+
     srand(time(NULL));
     while(lives != 0){
+    	/*randomize the dictonary index 0-9*/
     	currIndex = rand() % 10;
+
+    	/*check if the word in the corresponding index is already solved/visited
+    	  to avoid duplicates*/ 
     	while(visited(currIndex, visitedIndex) == 1){
     		currIndex = rand() % 10;
     	}
 
+    	/*add index to visited*/
     	visitedIndex[v_indicator] = currIndex;
     	v_indicator++;
 
-    	WORD currentWord = dictionary[currIndex];
+    	/*print the category of the current word*/
+    	printf("\t\t\t\t %s\n", dictionary[currIndex].category);
+    	
+    	/*store length of the word*/
+    	currWordLength = strlen(dictionary[currIndex].word);
 
-    	printf("\t\t\t\t %s\n", currentWord.category);
-
-    	for(i = 0; i < WORD_SIZE; ++i){
-    		if(isalpha(currentWord.word[i])){
-    			printf("_ ");
+    	/*store the current game state of the word into the variable WORD currentWord*/
+    	for(i = 0; i < currWordLength; ++i){
+    		if(isalpha(dictionary[currIndex].word[i])){
+    			currentWord.word[i] = '_';
     		}else{
-    			printf("%c", currentWord.word[i]); //in cases of (')
+    			currentWord.word[i] = dictionary[currIndex].word[i]; //in cases of (')
     		}
     	}
-    	printf("\n");
 
-    	printf("[0] Exit Game\n");
-    	getchar();
-    	printf("Give me a letter: ");
-    	scanf("%c", &input);
+    	printWord(currWordLength, currentWord.word);
 
-    	switch(input){
-    		case '0': printf("Your score: %i. Goodbye! See you next time!\n", (*score)); break;
-    		default: /*search the letter here*/
+    	while(match != currWordLength-1 && lives != 0){
+    		int pass = 0;
+    		printf("\nLives: %i | [0] Exit Game\n", lives);
+	    	getchar();
+	    	printf("Give me a letter: ");
+	    	scanf("%c", &input);
 
-    		break;
+	    	switch(input){
+	    		case '0':	printf("Your score: %i. Goodbye! See you next time!\n", (*score)); 
+	    					exit(0); 
+	    					break;
+
+	    		default: 
+			    			/*search the letter here*/
+			    			for(i = 0; i < currWordLength; ++i){
+			    				if(dictionary[currIndex].word[i] == input || dictionary[currIndex].word[i] == toupper(input)){
+			    					currentWord.word[i] = input;
+			    					match++;
+			    					pass = 1;
+			    				}
+			    			}
+
+			    			printWord(currWordLength, currentWord.word);
+
+			    			if(pass == 0){
+			    				lives--;
+			    			}
+
+	    		break;
+	    	}
     	}
+
+    	(*score) += lives;
+    	printf("Score: %i\n", (*score));
 
     	break;
     }
-    
-
 
     exit(0);
-}
-
-int visited(int index, int array[]){
-	int i;
-	for(i = 0; i < WORDS_PER_LEVEL; ++i){
-		if(index == array[i]) return 1;
-	}
-	return 0;
 }
