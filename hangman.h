@@ -1,7 +1,8 @@
 #define DICTIONARY_SIZE 10
 #define WORD_SIZE 50
 #define WORDS_PER_LEVEL 5
-
+#define TRUE 1
+#define FALSE 0
 void banner(){
 	system("clear");	//clears the visible surface of the terminal
 	printf("\n");
@@ -59,12 +60,20 @@ typedef struct wordtag{
 	char category[100];
 }WORD;
 
-int visited(int index, int array[]){
+int visitedWord(int index, int array[]){
 	int i;
 	for(i = 0; i < WORDS_PER_LEVEL; ++i){
-		if(index == array[i]) return 1;
+		if(index == array[i]) return TRUE;
 	}
-	return 0;
+	return FALSE;
+}
+
+int visitedLetter(char input, char *word){
+	int i;
+	for(i = 0; i < strlen(word); ++i){
+		if(input == word[i]) return TRUE;
+	}
+	return FALSE;
 }
 
 void printWord(int currWordLength, char *word){
@@ -98,7 +107,7 @@ int play(int *score, int level){
     }
 
 
-    int lives = 7, match = 0, currIndex, currWordLength, i;
+    int lives = 7, guessed = 0, currIndex, currWordLength, i;
     int visitedIndex[5], v_indicator = 0;
     char input;
 
@@ -111,7 +120,7 @@ int play(int *score, int level){
 
     	/*check if the word in the corresponding index is already solved/visited
     	  to avoid duplicates*/ 
-    	while(visited(currIndex, visitedIndex) == 1){
+    	while(visitedWord(currIndex, visitedIndex) == TRUE){
     		currIndex = rand() % 10;
     	}
 
@@ -136,11 +145,14 @@ int play(int *score, int level){
 
     	printWord(currWordLength, currentWord.word);
 
-    	while(match != currWordLength-1 && lives != 0){
-    		int pass = 0;
+    	while(guessed != currWordLength && lives != 0){
+    		int pass = 0, guessIndicator = 0;
+    		char lettersGuessed[50];
+
     		printf("\nLives: %i | [0] Exit Game\n", lives);
 	    	getchar();
 	    	printf("Give me a letter: ");
+	    	
 	    	scanf("%c", &input);
 
 	    	switch(input){
@@ -153,10 +165,14 @@ int play(int *score, int level){
 			    			for(i = 0; i < currWordLength; ++i){
 			    				if(dictionary[currIndex].word[i] == input || dictionary[currIndex].word[i] == toupper(input)){
 			    					currentWord.word[i] = input;
-			    					match++;
-			    					pass = 1;
+			    					lettersGuessed[guessIndicator] = input;
+			    					guessed++;	
+			    				pass = 1;
 			    				}
 			    			}
+			    			// if(visitedLetter(input, lettersGuessed) == FALSE){
+			    			// 	lettersGuessed[guessIndicator] = input;
+			    			// }
 
 			    			printWord(currWordLength, currentWord.word);
 
