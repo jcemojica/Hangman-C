@@ -85,6 +85,83 @@ void printWord(int length, char *word){
 	printf("\n");
 }
 
+void showHangman(int lives){ //switch by remaining lives
+	switch(lives){
+		case 0: 	printf("\n\t||===== ");
+					printf("\n\t||    | ");
+					printf("\n\t||    | ");
+					printf("\n\t||    O ");
+					printf("\n\t||   /|\\");
+					printf("\n\t||   / \\ ");
+					printf("\n\t||      ");
+					break;
+
+		case 1: 	printf("\n\t||===== ");
+					printf("\n\t||    | ");
+					printf("\n\t||    | ");
+					printf("\n\t||    O ");
+					printf("\n\t||   /|\\");
+					printf("\n\t||   /  ");
+					printf("\n\t||      ");
+					break;
+
+		case 2: 	printf("\n\t||===== ");
+					printf("\n\t||    | ");
+					printf("\n\t||    | ");
+					printf("\n\t||    O ");
+					printf("\n\t||   /|\\");
+					printf("\n\t||      ");
+					printf("\n\t||      ");
+					break;
+
+		case 3: 	printf("\n\t||===== ");
+					printf("\n\t||    | ");
+					printf("\n\t||    | ");
+					printf("\n\t||    O ");
+					printf("\n\t||   /| ");
+					printf("\n\t||      ");
+					printf("\n\t||      ");
+					break;
+
+		case 4: 	printf("\n\t||===== ");
+					printf("\n\t||    | ");
+					printf("\n\t||    | ");
+					printf("\n\t||    O ");
+					printf("\n\t||    | ");
+					printf("\n\t||      ");
+					printf("\n\t||      ");
+					break;
+		case 5: 	
+					printf("\n\t||===== ");
+					printf("\n\t||    | ");
+					printf("\n\t||    | ");
+					printf("\n\t||    O ");
+					printf("\n\t||      ");
+					printf("\n\t||      ");
+					printf("\n\t||      ");
+					break;
+
+		case 6: 	printf("\n\t||===== ");
+					printf("\n\t||    | ");
+					printf("\n\t||    | ");
+					printf("\n\t||      ");
+					printf("\n\t||      ");
+					printf("\n\t||      ");
+					printf("\n\t||      ");
+					break;
+
+		case 7: 	printf("\n\t||===== ");
+					printf("\n\t||    | ");
+					printf("\n\t||      ");
+					printf("\n\t||      ");
+					printf("\n\t||      ");
+					printf("\n\t||      ");
+					printf("\n\t||      ");
+					break;
+		default: break;
+	}
+}
+
 int play(int *score, int level){
 	system("clear");
 
@@ -146,7 +223,7 @@ int play(int *score, int level){
 	    correctLtrIndicator = 0;
 	    lettersGuessed = 0;
 	    lives = 7;
-	    
+
 	   	char inputLetters[50], correctLetters[50];
 	   	for(i = 0; i < 50; ++i){
 	   		inputLetters[i] = '0';
@@ -154,8 +231,10 @@ int play(int *score, int level){
 	   	}
 
 		do{
-			printf("%s%s\n", levelName, dictionary[dictIndicator].category);
+			system("clear");
+			printf("%s%s\n", levelName, dictionary[currentDictIndex].category);
 			printf("\t\t\t   Words Guessed for this level: %i\n\n", wordCtr);
+			showHangman(lives);
 
 			printWord(currentWordLength, currentWord);
 
@@ -201,7 +280,8 @@ int play(int *score, int level){
 
 			wordCtr++;
 		}else{
-			printf("Game over\n");
+			showHangman(lives);
+			printf("\tGame over\n");
 		}
     }
 }
