@@ -46,10 +46,10 @@ void instructions(int *opt){
 void levels(int *opt){
 	printf("\t\t* * * * * * * * * * *   * * * * * * * * * * *\n");
 	printf("\t\t*                                           *\n");
-	printf("\t\t* [1] ZUPER EAZY, YOU WON'T ZWEAT           *\n");
-	printf("\t\t* [2] NOT ZO EAZY                           *\n");
-	printf("\t\t* [3] NOZEBLEEDING                          *\n");
-	printf("\t\t* [0] EXIT                                  *\n");
+	printf("\t\t*    [1] ZUPER EAZY, YOU WON'T ZWEAT        *\n");
+	printf("\t\t*    [2] NOT ZO EAZY                        *\n");
+	printf("\t\t*    [3] NOZEBLEEDING                       *\n");
+	printf("\t\t*    [0] EXIT                               *\n");
 	printf("\t\t*                                           *\n");
 	printf("\t\t* * * * * * * * * * *   * * * * * * * * * * *\n");
 	printf("\t\t\t      Enter choice: ");
@@ -77,15 +77,17 @@ int visitedLetter(char input, char *pool){
 	return FALSE;
 }
 
-void printWord(int currWordLength, char *word){
+void printWord(int length, char *word){
 	int i;
-	for(i = 0; i < currWordLength; ++i){
+	for(i = 0; i < length; ++i){
 		printf("%c ", word[i]);
 	}
 	printf("\n");
 }
 
 int play(int *score, int level){
+	system("clear");
+
 	WORD dictionary[10] = {
 							{"Mang Toto", "Kainan sa Elbi"},
 							{"Chicken joy", "Foodz"},
@@ -99,128 +101,107 @@ int play(int *score, int level){
 							{"butterfly bush", "Flowers"}
                			};
 
-    system("clear");           			
+    char *levelName;
     switch(level){
-    	case 1: printf("\t\t\t ZUPER EAZY, YOU WON'T ZWEAT\n"); break;
-    	case 2: printf("\t\t\t NOT ZO EAZY\n"); break;
-    	case 3: printf("\t\t\t NOZEBLEEDING\n"); break;
+    	case 1: 	levelName = "\t\t\t ZUPER EAZY, YOU WON'T ZWEAT: \0";
+    				break;
+
+    	case 2: 	levelName = "\t\t\t NOT ZO EAZY: \0";
+    				break;
+
+    	case 3: 	levelName = "\t\t\t NOZEBLEEDING: \0";
+    				break;
+
     	default: break;
     }
 
+    int dictVisited[5], dictIndicator = 0, i, nonalpha;
+    int lives = 7, correctWordGuess = 0, wordCtr = 0, lettersGuessed = 0;
+    int currentDictIndex = 0, currentWordLength = 0;
 
-    /*
-    *	lives = number of chances
-	*	guessed = counter for correctly guessed letters for the current word
-	*	currIndex = index of the current word from the dictionary for the current level
-	*	currWordLength = length of the current word
-	*	wordsGuessed = counter for the words already guessed
-	*	nonalpha = counter for non-alpha character such as space and '
-	*	wordCtr = counter for how many words have already been involved where solved or not
-	*
-	*	visitedIndex[] = stores the indices of words already used
-	*	v_indicator = position indicator for visitedIndex
-	*
-	*	input = allotted for the user's input
-	*
-	*	currentWord = where the word's game state will be stored (as in _ and stuff)
-    */
-
-    int lives = 7, guessed = 0, currIndex, currWordLength, wordsGuessed = 0, i, nonalpha = 0;
-    int visitedIndex[5], v_indicator = 0, wordCtr;
-    char input;
-
-    WORD currentWord;
+    int doesLetterPass = FALSE, inputLtrIndicator = 0, correctLtrIndicator = 0;
+	char currentWord[50], input;
 
     srand(time(NULL));
-    while(lives != 0 && wordCtr != 5){
+    while(lives != 0 && wordCtr != WORDS_PER_LEVEL){
+		do{
+			currentDictIndex = rand() % 10;
+		}while(visitedWord(currentDictIndex, dictVisited) == TRUE);
 
-    	currIndex = rand() % 10; //randomize from 0-9
+		dictVisited[dictIndicator++] = currentDictIndex;
 
-    	while(visitedWord(currIndex, visitedIndex) == TRUE){ //continuously randomize if currIndex is in visitedIndex
-    		currIndex = rand() % 10;
-    	}
-
-    	visitedIndex[v_indicator] = currIndex; //add currIndex to visitedIndex
-    	v_indicator++;
-
-    	printf("\t\t\t\t %s\n", dictionary[currIndex].category);
-    	
-    	currWordLength = strlen(dictionary[currIndex].word);
-
-    	/*store the current game state of the word into the variable WORD currentWord*/
-    	for(i = 0; i < currWordLength; ++i){
-    		if(isalpha(dictionary[currIndex].word[i])){
-    			currentWord.word[i] = '_';
+		nonalpha = 0;
+		currentWordLength = strlen(dictionary[currentDictIndex].word);
+		for(i = 0; i < currentWordLength; ++i){
+			if(isalpha(dictionary[currentDictIndex].word[i])){
+    			currentWord[i] = '_';
     		}else{
-    			currentWord.word[i] = dictionary[currIndex].word[i]; //in cases of (')
+    			currentWord[i] = dictionary[currentDictIndex].word[i]; //in cases of special chars
     			nonalpha++;
     		}
-    	}
+		}
 
-    	printWord(currWordLength, currentWord.word);
+	    //initialize/reinitialize
+	    inputLtrIndicator = 0;
+	    correctLtrIndicator = 0;
+	    lettersGuessed = 0;
+	    lives = 7;
+	    
+	   	char inputLetters[50], correctLetters[50];
+	   	for(i = 0; i < 50; ++i){
+	   		inputLetters[i] = '0';
+	   		correctLetters[i] = '0';
+	   	}
 
+		do{
+			printf("%s%s\n", levelName, dictionary[dictIndicator].category);
+			printf("\t\t\t   Words Guessed for this level: %i\n\n", wordCtr);
 
-    	/*
-		*	pass = value would be 0 or 1; 1 if the current input has been matched
-		*	
-		*	lettersGuessed[] = array where the letters inputted by user are stored
-		*						ex. word to be guessed is "food", user inputted z -> meaning -1 in life
-		*							when he inputs z again in the next try, it wouldn't do anything to it
-		*	guessIndicator = position indicator for lettersGuessed
-		*
-		*	correctLetters[] = array where the letters correctly guessed are stored
-		*	correctIndicator = position indicator for correctLetters
-    	*/
+			printWord(currentWordLength, currentWord);
 
-    	int pass = 0, guessIndicator = 0, correctIndicator = 0;
-    	char lettersGuessed[50], correctLetters[50];
-    	
-    	while(guessed != currWordLength-nonalpha && lives != 0){
-    		pass = 0;
+			printf("\nLives: %i | Word Length: %i | Correct Guess(es): %i | Score: %i | [0] Exit Game\n", lives, currentWordLength-nonalpha, lettersGuessed, (*score));
 
-    		printf("\nLives: %i | Word Length: %i | Guessed: %i | [0] Exit Game\n", lives, currWordLength-nonalpha, guessed);
-	    	getchar(); //get/catch the extra \n from the previous printf
+			getchar(); // get/catch the extra \n from the previous printf
 	    	printf("Give me a letter: ");
 	    	scanf("%c", &input);
+	    	printf("\n\n");
 
-	    	switch(input){
-	    		case '0':	printf("Your score: %i. Goodbye! See you next time!\n", (*score)); 
+			switch(input){
+				case '0':	printf("Your score: %i. Goodbye! See you next time!\n", (*score)); 
 	    					exit(0); 
 	    					break;
 
-	    		default: 
-			    			/*search the letter here*/
-			    			for(i = 0; i < currWordLength-nonalpha+1; ++i){
-			    				if(dictionary[currIndex].word[i] == input || dictionary[currIndex].word[i] == toupper(input)){
-			    					currentWord.word[i] = dictionary[currIndex].word[i];
-			    					pass = 1;
-			    					if(visitedLetter(input, correctLetters) == FALSE) guessed++;
-			    				}
-			    			}
+				default: 	doesLetterPass = FALSE;
 
-			    			if(visitedLetter(input, correctLetters) == FALSE)
-			    				correctLetters[correctIndicator++] = input;
-			    			
-			    			if(visitedLetter(input, lettersGuessed) == FALSE && pass == 0){
-			    				lettersGuessed[guessIndicator++] = input;
-			    				lives --;
-					    	}
+							if(visitedLetter(input, correctLetters) == FALSE){
+								for(i = 0; i < currentWordLength; ++i){
+									if(dictionary[currentDictIndex].word[i] == input || dictionary[currentDictIndex].word[i] == toupper(input)){
+										currentWord[i] = dictionary[currentDictIndex].word[i];
+										doesLetterPass = TRUE;
+										lettersGuessed++;
+									}
+								}
 
-			    			printWord(currWordLength, currentWord.word);
-	    		break;
-	    	}
-    	}
+								if(doesLetterPass == TRUE) correctLetters[correctLtrIndicator++] = input;
+							}
 
-    	(*score) += lives;
-    	printf("Score: %i\n", (*score));
+							if(visitedLetter(input, inputLetters) == FALSE && doesLetterPass == FALSE) {
+								inputLetters[inputLtrIndicator++] = input;
+								lives--;
+							}
+							
+				break;
+			}
+		}while(lettersGuessed != currentWordLength-nonalpha && lives != 0);
 
-    	if(guessed == currWordLength){
-    		wordsGuessed++;
-    	}
+		if(lettersGuessed == currentWordLength-nonalpha){
+			(*score)+= lives;
+			printWord(currentWordLength, currentWord);
+			printf("\nLives: %i | Word Length: %i | Correct Guess(es): %i | Score: %i\n\n\n", lives, currentWordLength, lettersGuessed, (*score));
 
-    	wordCtr++;
-
-    	//reset life
-    	lives = 7;
+			wordCtr++;
+		}else{
+			printf("Game over\n");
+		}
     }
 }
