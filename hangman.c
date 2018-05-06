@@ -13,8 +13,7 @@ int main(){
 		menu(&choice);
 		
 		switch(choice){
-			case 1:
-				
+			case 1:			
 				do{
 					banner();
 					levels(&level);

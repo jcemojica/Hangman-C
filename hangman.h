@@ -281,7 +281,19 @@ int play(int *score, int level){
 			wordCtr++;
 		}else{
 			showHangman(lives);
-			printf("\tGame over\n");
+			printf("\nGame over. Your score is %i. Do you want to play another game? [1] Yes [0] No? ", (*score));
+			getchar();
+			scanf("%c", &input);
+
+			switch(input){
+				case '1':	(*score) = 0;
+							break;
+				case '0':	printf("Bye.");
+							exit(0);
+							break;
+				default:	(*score) = 0;
+							break;
+			}
 		}
     }
 }
