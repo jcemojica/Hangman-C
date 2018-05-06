@@ -30,7 +30,9 @@ void menu(int *opt){
 	scanf("%i", opt);
 }
 
-void instructions(int *opt){
+void instructions(){
+	system("clear");
+
 	printf("## ##    ##   #######  ######## ########   ##       ##  ######## ######## ##  #######  ##    ##   #######\n");
 	printf("## ###   ##  ##           ##    ##     ##  ##       ## ##           ##    ## ##     ## ###   ##  ##    \n");
 	printf("## ####  ##  ###          ##    ##     ##  ##       ## ##           ##    ## ##     ## ####  ##  ###   \n");
@@ -39,8 +41,16 @@ void instructions(int *opt){
 	printf("## ##   ###         ##    ##    ##    ##    ##     ##  ##           ##    ## ##     ## ##   ###         ##\n");
 	printf("## ##    ##   #######     ##    ##     ##    #######    ########    ##    ##  #######  ##    ##   #######\n");
 
-	/*instructions*/
-	/*exit*/
+	/*put instructions here*/
+	
+
+
+	int choice;
+	printf("[1] Back to main menu | [0] Exit: ");
+	scanf("%i", &choice);
+
+	if(choice == 0) exit(0);
+	else banner();
 }
 
 void levels(int *opt){
