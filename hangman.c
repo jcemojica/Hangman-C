@@ -14,30 +14,36 @@
 #define inst '2'
 #define quit_game '0'
 #define pause_length 50
-
 void banner(){
 	clrscr();
 	// system("clear");	//clears the visible surface of the terminal
 	printf("\n");
-	printf("\t##     ##    ###    ##    ##  ######   ##     ##    ###    ##    ##\n");
-	printf("\t##     ##   ## ##   ###   ## ##    ##  ###   ###   ## ##   ###   ##\n");
-	printf("\t##     ##  ##   ##  ####  ## ##        #### ####  ##   ##  ####  ##\n");
-	printf("\t######### ##     ## ## ## ## ##   #### ## ### ## ##     ## ## ## ##\n");
-	printf("\t##     ## ######### ##  #### ##    ##  ##     ## ######### ##  ####\n");
-	printf("\t##     ## ##     ## ##   ### ##    ##  ##     ## ##     ## ##   ###\n");
-	printf("\t##     ## ##     ## ##    ##  ######   ##     ## ##     ## ##    ##\n");
+	textcolor(BLUE);
+	printf("\t\t##     ##    ###    ##    ##  ######   ##     ##    ###    ##    ##\n");
+	printf("\t\t##     ##   ## ##   ###   ## ##    ##  ###   ###   ## ##   ###   ##\n");
+	textcolor(LIGHTBLUE);
+	printf("\t\t##     ##  ##   ##  ####  ## ##        #### ####  ##   ##  ####  ##\n");
+	printf("\t\t######### ##     ## ## ## ## ##   #### ## ### ## ##     ## ## ## ##\n");
+	textcolor(CYAN);
+	printf("\t\t##     ## ######### ##  #### ##    ##  ##     ## ######### ##  ####\n");
+	printf("\t\t##     ## ##     ## ##   ### ##    ##  ##     ## ##     ## ##   ###\n");
+	textcolor(LIGHTCYAN);
+	printf("\t\t##     ## ##     ## ##    ## #      #  ##     ## ##     ## ##    ##\n");
+	printf("\t\t##     ## ##     ## ##    ##  ######   ##     ## ##     ## ##    ##\n");
 	printf("\n");
 }
 
 void menu(){
 	printf("\n");
-	printf("\t\t\t  * * * * * *  * * * * * *\n");
-	printf("\t\t\t  *                      *\n");
-	printf("\t\t\t  *   [1]  PLAY          *\n");
-	printf("\t\t\t  *   [0]  EXIT          *\n");
-	printf("\t\t\t  *                      *\n");
-	printf("\t\t\t  * * * * * *  * * * * * *\n");
-	printf("\t\t\t      Enter choice: ");
+	textcolor(YELLOW);
+	printf("\t\t\t\t\t\t\t  * * * * * * * * * * * * * *  *\n");
+	printf("\t\t\t\t\t\t\t  *                            *\n");
+	printf("\t\t\t\t\t\t\t  *         [1]  PLAY          *\n");
+	printf("\t\t\t\t\t\t\t  *         [0]  EXIT          *\n");
+	printf("\t\t\t\t\t\t\t  *                            *\n");
+	printf("\t\t\t\t\t\t\t  * * * * * *  * * * * * * * * *\n");
+	textcolor(CYAN);
+	printf("\t\t\t\t\t\t\t           Enter choice: ");
 	// choice=(char)getch();
 	// getchar("%i", opt);
 }
@@ -45,9 +51,12 @@ void menu(){
 void hangman_instructions(){
 	delay(pause_length);
 	printf("\n\n");
+	textcolor(LIGHTBLUE);
 	printf("\n\t\tThis Hangman game has 3 levels which are ZUPER EAZY, YOU WON'T ZWEAT (Easy),NOT ZO EAZY (Intermediate), and NOZEBLEEDING (Difficult). Each level has 3 words that you should be able to guess in order for you to win. It will be too difficult if each word has no definite category that's why this game has. The categories are very relevant especially to those who are taking and already took CMSC 125 and enthusiasts. \n");
+	textcolor(YELLOW);
+	printf("\n\n\n\t\t\t\t\t\t\t\t\tLIFE and SCORING\n");                                                                      
 
-	printf("\n\n\n\t\t\t\t\t\tLIFE and SCORING\n");
+	textcolor(LIGHTBLUE);
 	printf("\n\t\t The player initially has 7 lives in every instance in a level. A hangman will be created if the player guessed 7 incorrect letters from each word. If the player successfully guessed the word then then the remaining sticks will be the player's points and it will be added to the current score.\n");
 	printf("\n");
 
@@ -56,20 +65,24 @@ void hangman_instructions(){
 void instructions(){
 	clrscr();
 	clrscr();
-	// system("clear");
 	delay(pause_length);
-	
+	textcolor(YELLOW);
 	printf("\n\n");
-	printf("\t\t\t\tI N S T R U C T I O N S\n");
-	// printf("## ##    ##   #######  ######## ########   ##       ##  ######## ######## ##  #######  ##    ##   #######\n");
-	// printf("## ###   ##  ##           ##    ##     ##  ##       ## ##           ##    ## ##     ## ###   ##  ##    \n");
-	// printf("## ####  ##  ###          ##    ##     ##  ##       ## ##           ##    ## ##     ## ####  ##  ###   \n");
-	// printf("## ## ## ##     ###       ##    ## ####    ##       ## ##           ##    ## ##     ## ## ## ##     ###   \n");
-	// printf("## ##  ####        ##     ##    ##   ##    ##       ## ##           ##    ## ##     ## ##  ####        ## \n");
-	// printf("## ##   ###         ##    ##    ##    ##    ##     ##  ##           ##    ## ##     ## ##   ###         ##\n");
-	// printf("## ##    ##   #######     ##    ##     ##    #######    ########    ##    ##  #######  ##    ##   #######\n");
-
+	printf("\t\t\t                         ''~``\n");
+	printf("\t\t\t                        ( o o )\n");
+	printf("\t\t\t+------------------.oooO--(_)--Oooo.------------------+\n");
+	printf("\t\t\t|                                                     |\n");
+	printf("\t\t\t|                                                     |\n");
+	printf("\t\t\t|                 I N S T R U C T I O N S             |\n");
+	printf("\t\t\t|                                                     |\n");
+	printf("\t\t\t|                    .oooO                            |\n");
+	printf("\t\t\t|                    (   )   Oooo.                    |\n");
+	printf("\t\t\t+---------------------\ (----(   )--------------------+\n");
+	printf("\t\t\t                       \_)    ) /\n");
+	printf("\t\t\t                             (_/\n");
 	/*put instructions here*/
+	
+
 	hangman_instructions();
 		
 }
@@ -79,16 +92,21 @@ void levels(){
 	instructions();
 	delay(pause_length);
 	delay(pause_length);
+	delay(pause_length);
+	delay(pause_length);
+	delay(pause_length);
 	printf("\n");
-	printf("\t\t* * * * * * * * * * * * * * * * * * * * * * *\n");
-	printf("\t\t*                                           *\n");
-	printf("\t\t*    [1] ZUPER EAZY, YOU WON'T ZWEAT        *\n");
-	printf("\t\t*    [2] NOT ZO EAZY                        *\n");
-	printf("\t\t*    [3] NOZEBLEEDING                       *\n");
-	printf("\t\t*    [0] EXIT                               *\n");
-	printf("\t\t*                                           *\n");
-	printf("\t\t* * * * * * * * * * * * * * * * * * * * * * *\n");
-	printf("\t\t\t      Enter choice: ");
+	textcolor(CYAN);
+	printf("\t\t\t\t\t\t* * * * * * * * * * * * * * * * * * * * * * *\n");
+	printf("\t\t\t\t\t\t*                                           *\n");
+	printf("\t\t\t\t\t\t*    [1] ZUPER EAZY, YOU WON'T ZWEAT        *\n");
+	printf("\t\t\t\t\t\t*    [2] NOT ZO EAZY                        *\n");
+	printf("\t\t\t\t\t\t*    [3] NOZEBLEEDING                       *\n");
+	printf("\t\t\t\t\t\t*    [0] EXIT                               *\n");
+	printf("\t\t\t\t\t\t*                                           *\n");
+	printf("\t\t\t\t\t\t* * * * * * * * * * * * * * * * * * * * * * *\n");
+	textcolor(LIGHTBLUE);
+	printf("\t\t\t\t\t\t\t\t      Enter choice: ");
 	// getchar("%i", opt);
 	// levels=(char)getch();
 }
@@ -124,7 +142,8 @@ void printWord(int length, char *word){
 
 void showHangman(int lives){ //switch by remaining lives
 	switch(lives){
-		case 0: 	printf("\n\t||===== ");
+		case 0: 	textcolor(RED);
+					printf("\n\t||===== ");
 					printf("\n\t||    | ");
 					printf("\n\t||    | ");
 					printf("\n\t||    O ");
@@ -133,7 +152,8 @@ void showHangman(int lives){ //switch by remaining lives
 					printf("\n\t||      ");
 					break;
 
-		case 1: 	printf("\n\t||===== ");
+		case 1: 	textcolor(LIGHTRED);
+					printf("\n\t||===== ");
 					printf("\n\t||    | ");
 					printf("\n\t||    | ");
 					printf("\n\t||    O ");
@@ -142,7 +162,8 @@ void showHangman(int lives){ //switch by remaining lives
 					printf("\n\t||      ");
 					break;
 
-		case 2: 	printf("\n\t||===== ");
+		case 2: 	textcolor(DARKGRAY);
+					printf("\n\t||===== ");
 					printf("\n\t||    | ");
 					printf("\n\t||    | ");
 					printf("\n\t||    O ");
@@ -151,7 +172,8 @@ void showHangman(int lives){ //switch by remaining lives
 					printf("\n\t||      ");
 					break;
 
-		case 3: 	printf("\n\t||===== ");
+		case 3: 	textcolor(CYAN);
+					printf("\n\t||===== ");
 					printf("\n\t||    | ");
 					printf("\n\t||    | ");
 					printf("\n\t||    O ");
@@ -160,7 +182,8 @@ void showHangman(int lives){ //switch by remaining lives
 					printf("\n\t||      ");
 					break;
 
-		case 4: 	printf("\n\t||===== ");
+		case 4: 	textcolor(MAGENTA);
+					printf("\n\t||===== ");
 					printf("\n\t||    | ");
 					printf("\n\t||    | ");
 					printf("\n\t||    O ");
@@ -168,7 +191,8 @@ void showHangman(int lives){ //switch by remaining lives
 					printf("\n\t||      ");
 					printf("\n\t||      ");
 					break;
-		case 5: 	
+		
+		case 5: 	textcolor(LIGHTMAGENTA);
 					printf("\n\t||===== ");
 					printf("\n\t||    | ");
 					printf("\n\t||    | ");
@@ -178,7 +202,8 @@ void showHangman(int lives){ //switch by remaining lives
 					printf("\n\t||      ");
 					break;
 
-		case 6: 	printf("\n\t||===== ");
+		case 6: 	textcolor(GREEN);
+					printf("\n\t||===== ");
 					printf("\n\t||    | ");
 					printf("\n\t||    | ");
 					printf("\n\t||      ");
@@ -187,7 +212,8 @@ void showHangman(int lives){ //switch by remaining lives
 					printf("\n\t||      ");
 					break;
 
-		case 7: 	printf("\n\t||===== ");
+		case 7: 	textcolor(LIGHTGREEN);
+					printf("\n\t||===== ");
 					printf("\n\t||    | ");
 					printf("\n\t||      ");
 					printf("\n\t||      ");
@@ -272,22 +298,27 @@ int play(int *score, int level){
 		do{
 			clrscr();
 			// system("clear");
+			textcolor(CYAN);
 			printf("%s%s\n", levelName, dictionary[currentDictIndex].category);
+			textcolor(YELLOW);
 			printf("\t\t\t   Words Guessed for this level: %i\n\n", wordCtr);
 			showHangman(lives);
-
+			textcolor(YELLOW);
 			printWord(currentWordLength, currentWord);
-
+			textcolor(LIGHTCYAN);
 			printf("\nLives: %i | Word Length: %i | Correct Guess(es): %i | Score: %i | [0] Exit Game\n", lives, currentWordLength-nonalpha, lettersGuessed, (*score));
 
 			// getch(); // get/catch the extra \n from the previous printf
+			textcolor(CYAN);
 	    	printf("Give me a letter: ");
 	    	input=(char)getch();
 	    	// getch("%c", &input);
 	    	printf("\n\n");
 
 			switch(input){
-				case quit_game:	printf("Your score: %i. Goodbye! See you next time!\n", (*score)); 
+				case quit_game:	
+							textcolor(YELLOW);
+							printf("Your score: %i. Goodbye! See you next time!\n", (*score)); 
 	    					exit(0); 
 	    					break;
 
@@ -322,8 +353,9 @@ int play(int *score, int level){
 			wordCtr++;
 		}else{
 			showHangman(lives);
+			textcolor(YELLOW);
 			printf("\nGame over. Your score is %i. Do you want to play another game? [1] Yes [0] No? ", (*score));
-			// getchar();
+			getchar();
 			input=(char)getch();
 			// getch("%c", &input);
 
